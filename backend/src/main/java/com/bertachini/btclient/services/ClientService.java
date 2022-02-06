@@ -36,6 +36,7 @@ public class ClientService {
 	@Transactional(readOnly = true)
 	public Page<ClientDTO> findAllPaged(PageRequest pageRequest) {
 		Page<Client> list = repository.findAll(pageRequest);
+		//page é um stream
 		return list.map(clientPage -> new ClientDTO(clientPage));
 	}
 	
