@@ -1,50 +1,42 @@
-package com.bertachini.btclient.entities;
+package com.bertachini.btclient.dto;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "tb_client")
-public class Client {
+import com.bertachini.btclient.entities.Client;
+
+public class ClientDTO implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private String name;
 	private String cpf;
 	private Double income;
-	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant birthDate;
-	
 	private Integer children;
-	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant createdAt;
-	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant updatedAt;
 
-	public Client() {
+	public ClientDTO() {
 	}
 
-	public Client(Long id, String name, String cpf, Double income, Instant birthDate, Integer children) {
+	public ClientDTO(Long id, String name, String cpf, Double income, Instant birthDate, Integer children) {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
 		this.income = income;
 		this.birthDate = birthDate;
 		this.children = children;
+	}
+	
+	public ClientDTO(Client entity) {
+		this.id = entity.getId();
+		this.name = entity.getName();
+		this.cpf = entity.getCpf();
+		this.income = entity.getIncome();
+		this.birthDate = entity.getBirthDate();
+		this.children = entity.getChildren();
 	}
 
 	public Long getId() {
@@ -93,26 +85,7 @@ public class Client {
 
 	public void setChildren(Integer children) {
 		this.children = children;
-	} 
-	
-	public Instant getCreatedAt() {
-		return createdAt;
 	}
-
-	public Instant getUpdatedAt() {
-		return updatedAt;
-	}
-	
-	@PrePersist
-	public void prePersist() {
-		createdAt = Instant.now();
-	}
-	
-	@PreUpdate
-	public void preUpdate() {
-		updatedAt = Instant.now();
-	}
-
 
 	@Override
 	public int hashCode() {
@@ -127,13 +100,11 @@ public class Client {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Client other = (Client) obj;
+		ClientDTO other = (ClientDTO) obj;
 		return Objects.equals(id, other.id);
 	}
+
 	
-	
-	
-	
-	
-	
+
+
 }
